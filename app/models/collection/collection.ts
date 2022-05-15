@@ -1,0 +1,35 @@
+import { cast, destroy, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Deck, DeckModel, DeckRaw } from "../deck/deck"
+import { withEnvironment } from "../extensions/with-environment"
+import { v4 } from "uuid"
+
+export const CollectionModel = types
+  .model("Collection")
+  .props({
+    decks: types.optional(types.array(DeckModel), []),
+  })
+  .extend(withEnvironment)
+  .actions((self) => ({
+    import: async (deck: DeckRaw) => {
+      const filledCards = deck.cards.map((c) => ({
+        question: c.question,
+        answer: c.answer,
+        id: v4(),
+        interval: c.interval,
+      }))
+      const filledDeck = { name: deck.name, cards: filledCards }
+
+      // self.decks.push(filledDeck)
+      console.log("add")
+      self.decks = cast([...self.decks, filledDeck])
+    },
+    deleteDeck: (deck: Deck) => {
+      destroy(deck)
+    },
+  }))
+
+type CollectionType = Instance<typeof CollectionModel>
+export interface Collection extends CollectionType {}
+type CollectionSnapshotType = SnapshotOut<typeof CollectionModel>
+export interface CollectionStoreSnapshot extends CollectionSnapshotType {}
+export const createCollectionDefaultModel = () => types.optional(CollectionModel, {})
