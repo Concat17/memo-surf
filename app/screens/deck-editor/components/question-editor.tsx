@@ -43,10 +43,6 @@ const EDIT_TEXT: TextStyle = {
   letterSpacing: 2,
 }
 
-interface QuestionProps {
-  question: Card
-}
-
 const ANSWER: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
@@ -60,46 +56,19 @@ const ANSWER_TEXT: TextStyle = {
   letterSpacing: 2,
 }
 
-export function QuestionEditorComponent({ question: initQuestion }: QuestionProps) {
-  const [isRevialed, setIsRevialed] = React.useState(false)
+interface QuestionProps {
+  question: Card
+  onCardPress: () => void
+}
 
-  const [question, setQuestion] = React.useState(initQuestion.question)
-  const [answer, setAnswer] = React.useState(initQuestion.answer)
-
+export function QuestionEditorComponent({ question, onCardPress }: QuestionProps) {
   return (
     <View style={EDITOR}>
-      {isRevialed ? (
-        <View style={EDITOR_OPEN}>
-          <TextInput
-            style={EDIT_INPUT}
-            defaultValue={question}
-            onChangeText={setQuestion}
-            placeholder="Question"
-          />
-          <TextInput
-            style={EDIT_INPUT}
-            defaultValue={answer}
-            onChangeText={setAnswer}
-            placeholder="Answer"
-          />
-          <Button
-            testID="next-screen-button"
-            style={EDIT}
-            textStyle={EDIT_TEXT}
-            tx="common.save"
-            onPress={() => {
-              setIsRevialed(false)
-              initQuestion.edit(question, answer)
-            }}
-          />
-        </View>
-      ) : (
-        <View style={EDITOR_CLOSED}>
-          <Text style={EDIT_TEXT} onPress={() => setIsRevialed(true)}>
-            {question}
-          </Text>
-        </View>
-      )}
+      <View style={EDITOR_CLOSED}>
+        <Text style={EDIT_TEXT} onPress={onCardPress}>
+          {question.question}
+        </Text>
+      </View>
     </View>
   )
 }

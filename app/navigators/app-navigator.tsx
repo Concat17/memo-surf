@@ -6,14 +6,17 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { MainScreen } from "../screens/main/main-screen"
 import { ExaminerScreen } from "../screens/examiner"
 import { Deck } from "../models/deck/deck"
-import { EditorScreen } from "../screens/editor"
 import { SettingsScreen } from "../screens/settings/settings-screen"
+import { DeckEditorScreen } from "../screens/deck-editor/deck-editor-screen"
+import { Card } from "../models/card/card"
+import { CardEditorScreen } from "../screens/card-editor/card-editor-screen"
 
 export type NavigatorParamList = {
   main: undefined
   examiner: undefined
   settings: undefined
-  editor: { deck: Deck }
+  deckEditor: { deck: Deck }
+  cardEditor: { card?: Card | null }
 }
 
 const Stack = createNativeStackNavigator<NavigatorParamList>()
@@ -28,8 +31,9 @@ const AppStack = () => {
     >
       <Stack.Screen name="examiner" component={ExaminerScreen} />
       <Stack.Screen name="main" component={MainScreen} />
-      <Stack.Screen name="editor" component={EditorScreen} />
+      <Stack.Screen name="deckEditor" component={DeckEditorScreen} />
       <Stack.Screen name="settings" component={SettingsScreen} />
+      <Stack.Screen name="cardEditor" component={CardEditorScreen} />
     </Stack.Navigator>
   )
 }

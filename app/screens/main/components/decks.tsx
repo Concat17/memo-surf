@@ -90,7 +90,7 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
       await FileSystem.writeAsStringAsync(uri, JSON.stringify(preparedDeck))
     }
 
-    const goEditorScreen = (deck: Deck) => nav.navigate("editor", { deck })
+    const goEditorScreen = (deck: Deck) => nav.navigate("deckEditor", { deck })
     return (
       <View style={FULL}>
         <Menu name="deck-options" style={MENU_STYLE}>

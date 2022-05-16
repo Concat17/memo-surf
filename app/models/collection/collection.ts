@@ -9,6 +9,12 @@ export const CollectionModel = types
     decks: types.optional(types.array(DeckModel), []),
   })
   .extend(withEnvironment)
+  .views((self) => ({
+    getDeckByName(name: string) {
+      const deck = self.decks.find((d) => d.name === name)
+      return deck
+    },
+  }))
   .actions((self) => ({
     import: async (deck: DeckRaw) => {
       const filledCards = deck.cards.map((c) => ({
