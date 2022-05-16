@@ -45,13 +45,7 @@ export const EditorScreen: FC<StackScreenProps<NavigatorParamList, "editor">> = 
       <View style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Header
-            headerTx="editorScreen.header"
-            leftIcon="back"
-            onLeftPress={goBack}
-            style={HEADER}
-            titleStyle={HEADER_TITLE}
-          />
+          <Header headerTx="editorScreen.header" style={HEADER} titleStyle={HEADER_TITLE} />
           <View>
             <QuestionCreatorComponent deck={deck} />
 

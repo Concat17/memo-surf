@@ -1,40 +1,21 @@
-/**
- * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
- * navigation flows of your app.
- * Generally speaking, it will contain an auth flow (registration, login, forgot password)
- * and a "main" flow which the user will use once logged in.
- */
 import React from "react"
 import { useColorScheme } from "react-native"
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 import { MainScreen } from "../screens/main/main-screen"
 import { ExaminerScreen } from "../screens/examiner"
 import { Deck } from "../models/deck/deck"
 import { EditorScreen } from "../screens/editor"
+import { SettingsScreen } from "../screens/settings/settings-screen"
 
-/**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
- *
- * For more information, see this documentation:
- *   https://reactnavigation.org/docs/params/
- *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
- */
 export type NavigatorParamList = {
   main: undefined
   examiner: undefined
+  settings: undefined
   editor: { deck: Deck }
-  // 🔥 Your screens go here
 }
 
-// Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>()
 
 const AppStack = () => {
@@ -48,7 +29,7 @@ const AppStack = () => {
       <Stack.Screen name="examiner" component={ExaminerScreen} />
       <Stack.Screen name="main" component={MainScreen} />
       <Stack.Screen name="editor" component={EditorScreen} />
-      {/** 🔥 Your screens go here */}
+      <Stack.Screen name="settings" component={SettingsScreen} />
     </Stack.Navigator>
   )
 }

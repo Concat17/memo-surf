@@ -45,13 +45,13 @@ export const DeckComponent = ({ deck, onPress, onLongPress }: DeckProps) => {
   return (
     <View style={FULL}>
       <Text
-        style={{ ...COLLECTION_NAME_TEXT, color: theme.primary }}
+        style={{ ...COLLECTION_NAME_TEXT, color: theme.colors.primary }}
         onPress={onPress}
         onLongPress={onLongPress}
       >
         {deck.name}
       </Text>
-      <View style={{ ...DIVIDER_STYLE, borderBottomColor: theme.primary }} />
+      <View style={{ ...DIVIDER_STYLE, borderBottomColor: theme.colors.primary }} />
     </View>
   )
 }

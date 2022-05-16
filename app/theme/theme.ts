@@ -1,5 +1,8 @@
 export type Theme = {
-  primary: string
-  secondary: string
-  background: string
+  name: string
+  colors: {
+    primary: string
+    secondary: string
+    background: string
+  }
 }
