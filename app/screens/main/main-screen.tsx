@@ -76,10 +76,8 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
           />
         </View>
 
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <View style={MAIN_CONTAINER}>
-            <Decks decks={collection.decks} nav={navigation} />
-          </View>
+        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <Decks decks={collection.decks} nav={navigation} />
         </Screen>
       </View>
     )

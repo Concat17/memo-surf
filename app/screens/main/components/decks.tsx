@@ -24,7 +24,6 @@ const LIST_CONTAINER: ViewStyle = {
   flexDirection: "column",
   flexGrow: 1,
   position: "relative",
-  height: "100%",
 
   padding: 10,
 }
@@ -115,7 +114,6 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
               onPress={() => startLesson(item)}
               // eslint-disable-next-line no-sequences
               onLongPress={() => (setSelectedDeck(item), ctx.menuActions.openMenu("deck-options"))}
-              // onLongPress={() => setSelectedDeck(item)}
               deck={item}
               nav={nav}
             />

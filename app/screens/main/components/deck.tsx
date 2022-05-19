@@ -15,8 +15,6 @@ const TEXT: TextStyle = {
 const BOLD: TextStyle = { fontWeight: "bold" }
 
 const FULL: ViewStyle = {
-  flex: 1,
-  flexDirection: "column",
   marginBottom: spacing[5],
 }
 

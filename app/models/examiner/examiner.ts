@@ -72,7 +72,6 @@ export const ExaminerModel = types
       }
     },
     releaseCard(answer: AnswerLevel) {
-      // retrieve the stored values (default values if new cards)
       let repetitions = self.currentCard.repetitions
       let eFactor = self.currentCard.eFactor
       let interval = self.currentCard.interval
