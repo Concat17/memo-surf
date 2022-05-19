@@ -1,7 +1,7 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import { getFullScope } from "i18n-js"
 import * as React from "react"
-import { Text, TextStyle, View, ViewStyle } from "react-native"
+import { Text, TextStyle, TouchableHighlight, View, ViewStyle } from "react-native"
 import { ThemeContext } from "../../../app"
 import { Deck } from "../../../models/deck/deck"
 import { NavigatorParamList } from "../../../navigators"
@@ -42,16 +42,19 @@ interface DeckProps {
 
 export const DeckComponent = ({ deck, onPress, onLongPress }: DeckProps) => {
   const { theme } = React.useContext(ThemeContext)
+
   return (
-    <View style={FULL}>
-      <Text
-        style={{ ...COLLECTION_NAME_TEXT, color: theme.colors.primary }}
-        onPress={onPress}
-        onLongPress={onLongPress}
-      >
-        {deck.name}
-      </Text>
-      <View style={{ ...DIVIDER_STYLE, borderBottomColor: theme.colors.primary }} />
-    </View>
+    <TouchableHighlight
+      style={{ ...FULL }}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      activeOpacity={0.6}
+      underlayColor="#00263D"
+    >
+      <View>
+        <Text style={{ ...COLLECTION_NAME_TEXT, color: theme.colors.primary }}>{deck.name}</Text>
+        <View style={{ ...DIVIDER_STYLE, borderBottomColor: theme.colors.primary }} />
+      </View>
+    </TouchableHighlight>
   )
 }

@@ -1,15 +1,14 @@
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useCallback, useEffect, useState } from "react"
 import { View, ViewStyle, TextStyle, FlatList } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
-import { Screen, Text, GradientBackground, Header, Button } from "../../components"
-import { color, spacing, typography } from "../../theme"
+import { Screen, Text, GradientBackground, Header } from "../../components"
+import { color, spacing } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 import { QuestionEditorComponent } from "./components/question-editor"
 import { ThemeContext } from "../../app"
 import { ArrowBackIcon } from "../../icons/icons/ArrowBackIcon"
 import { Card } from "../../models/card/card"
-import { Deck } from "../../models/deck/deck"
 import { useStores } from "../../models"
 import { AddIcon } from "../../icons/icons/AddIcon"
 
@@ -32,51 +31,34 @@ const HEADER_TITLE: TextStyle = {
   letterSpacing: 1.5,
 }
 
-const TEXT: TextStyle = {
-  color: color.palette.white,
-  fontFamily: typography.primary,
-}
-
-const EDIT: ViewStyle = {
-  paddingVertical: spacing[2],
-  paddingHorizontal: spacing[2],
-  backgroundColor: color.palette.deepPurple,
-}
-
-const EDIT_INPUT: ViewStyle = {
-  ...TEXT,
-  padding: 10,
-}
-
-const EDIT_TEXT: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-
 export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEditor">> = observer(
   ({ navigation, route }) => {
+    const { theme } = React.useContext(ThemeContext)
+    const { collection } = useStores()
+
+    const currentDeck = route.params?.deck
+
+    const [questions, setQuestions] = useState<Card[]>(currentDeck?.cards ?? [])
+
     const goBack = () => {
       navigation.goBack()
     }
 
-    const { collection } = useStores()
-
-    const { deck } = route.params
-
-    const [currentDeck, setCurrentDeck] = useState<Deck | null>(null)
+    const goEditorScreen = useCallback(
+      (card?: Card | null) => {
+        navigation.navigate("cardEditor", { card })
+      },
+      [navigation],
+    )
 
     useEffect(() => {
-      const foundDeck = collection.getDeckByName(deck.name)
-      setCurrentDeck(foundDeck)
-    }, [collection])
-    const { theme } = React.useContext(ThemeContext)
+      navigation.addListener("focus", () => {
+        if (currentDeck?.name) {
+          setQuestions([...collection.getDeckByName(currentDeck.name).cards])
+        }
+      })
+    }, [collection, currentDeck?.name, navigation])
 
-    console.log("name", currentDeck?.name)
-    const questions = currentDeck?.cards
-
-    const goEditorScreen = (card?: Card | null) => navigation.navigate("cardEditor", { card })
     return (
       <View style={FULL}>
         <GradientBackground colors={[theme.colors.background, theme.colors.background]} />
@@ -97,7 +79,7 @@ export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEdit
           />
 
           <View>
-            {currentDeck ? (
+            {questions.length > 0 ? (
               <FlatList
                 keyExtractor={(deck) => String(deck.id)}
                 data={[...questions]}

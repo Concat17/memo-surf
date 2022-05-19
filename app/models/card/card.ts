@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotOut, types, getRoot } from "mobx-state-tree"
 
 export const CardModel = types
   .model("Card")

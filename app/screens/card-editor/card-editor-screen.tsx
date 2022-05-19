@@ -1,8 +1,8 @@
 import React, { FC } from "react"
-import { View, ViewStyle, TextStyle, FlatList, TextInput } from "react-native"
+import { View, ViewStyle, TextStyle, TextInput } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
-import { Screen, Text, GradientBackground, Header, Button } from "../../components"
+import { Screen, GradientBackground, Header, Button } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 
@@ -21,6 +21,7 @@ const HEADER: TextStyle = {
   paddingBottom: spacing[3],
   paddingHorizontal: spacing[2],
 }
+
 const HEADER_TITLE: TextStyle = {
   ...BOLD,
   fontSize: 20,
