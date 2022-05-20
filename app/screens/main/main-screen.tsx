@@ -10,10 +10,9 @@ import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"
 import { ThemeContext } from "../../app"
 
-import { ImportIcon } from "../../icons/icons/ImportIcon"
-
 import { Decks } from "./components/decks"
-import { SettingsIcon } from "../../icons/icons/SettingsIcon"
+import { SettingsIcon } from "../../components/icons/SettingsIcon"
+import { ImportIcon } from "../../components/icons/ImportIcon"
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   position: "relative",

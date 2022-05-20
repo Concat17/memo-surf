@@ -1,6 +1,7 @@
 import { destroy, Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
 import { Card, CardModel } from "../card/card"
+import { v4 } from "uuid"
 
 type CardStats = {
   eFactor: number
@@ -23,8 +24,14 @@ export const DeckModel = types
 
       return self.cards[0]
     },
-    addQuestion: (card: Card) => {
-      self.cards.push(card)
+    addQuestion: (q: string, a: string) => {
+      const question = CardModel.create({
+        id: v4(),
+        question: q,
+        answer: a,
+      })
+
+      self.cards.push(question)
     },
     deleteQuestion: (card: Card) => {
       destroy(card)

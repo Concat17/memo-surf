@@ -25,7 +25,7 @@
   "examinerScreen": {
     "header": "Question",
     "answerBad": "Bad",
-    "answerDiffucult": "Difficult",
+    "answerDiffucult": "Hard",
     "answerGood": "Good",
     "answerExcellent": "Excellent",
     "showAnswer": "Show answer"

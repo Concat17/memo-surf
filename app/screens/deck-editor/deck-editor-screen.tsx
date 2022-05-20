@@ -7,10 +7,10 @@ import { color, spacing } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 import { QuestionEditorComponent } from "./components/question-editor"
 import { ThemeContext } from "../../app"
-import { ArrowBackIcon } from "../../icons/icons/ArrowBackIcon"
+import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
 import { Card } from "../../models/card/card"
 import { useStores } from "../../models"
-import { AddIcon } from "../../icons/icons/AddIcon"
+import { AddIcon } from "../../components/icons/AddIcon"
 
 const FULL: ViewStyle = { flex: 1 }
 const BOLD: TextStyle = { fontWeight: "bold" }
@@ -31,6 +31,11 @@ const HEADER_TITLE: TextStyle = {
   letterSpacing: 1.5,
 }
 
+const LIST_STYLE: TextStyle = {
+  ...BOLD,
+  marginBottom: 50,
+}
+
 export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEditor">> = observer(
   ({ navigation, route }) => {
     const { theme } = React.useContext(ThemeContext)
@@ -46,9 +51,9 @@ export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEdit
 
     const goEditorScreen = useCallback(
       (card?: Card | null) => {
-        navigation.navigate("cardEditor", { card })
+        navigation.navigate("cardEditor", { card, deckName: currentDeck.name })
       },
-      [navigation],
+      [currentDeck.name, navigation],
     )
 
     useEffect(() => {
@@ -62,7 +67,7 @@ export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEdit
     return (
       <View style={FULL}>
         <GradientBackground colors={[theme.colors.background, theme.colors.background]} />
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header
             left={<ArrowBackIcon onPress={goBack} fill={theme.colors.primary} />}
             right={
@@ -83,6 +88,7 @@ export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEdit
               <FlatList
                 keyExtractor={(deck) => String(deck.id)}
                 data={[...questions]}
+                style={LIST_STYLE}
                 renderItem={({ item }) => (
                   <QuestionEditorComponent
                     question={item}

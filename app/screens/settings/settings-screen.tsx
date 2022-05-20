@@ -6,7 +6,7 @@ import { Screen, Text, GradientBackground, Header, Button } from "../../componen
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 import { ThemeContext } from "../../app"
-import { ArrowBackIcon } from "../../icons/icons/ArrowBackIcon"
+import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
 
 const FULL: ViewStyle = { flex: 1 }
 const BOLD: TextStyle = { fontWeight: "bold" }

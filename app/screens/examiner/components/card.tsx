@@ -14,41 +14,28 @@ const BOLD: TextStyle = { fontWeight: "bold" }
 const QUESTION_TEXT: TextStyle = {
   ...TEXT,
   ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-}
-
-const ANSWER: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: color.palette.deepPurple,
-}
-
-const ANSWER_TEXT: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 13,
+  fontSize: 20,
   letterSpacing: 2,
 }
 
 const QUESTION: ViewStyle = {
   display: "flex",
+  flex: 1,
   flexDirection: "column",
   alignSelf: "center",
   marginTop: 30,
 }
 
+const FULL: ViewStyle = { flex: 1, flexGrow: 1, justifyContent: "space-between" }
+
 interface QuestionProps {
   card: Card
-  keepCard: () => void
-  releaseCard: (answer: AnswerLevel) => void
+  isRevialed: boolean
 }
 
-export function CardComponent({ card, keepCard, releaseCard }: QuestionProps) {
-  const [isRevialed, setIsRevialed] = React.useState(false)
-
+export function CardComponent({ card, isRevialed }: QuestionProps) {
   return (
-    <View>
+    <View style={FULL}>
       <View style={QUESTION}>
         <View>
           <Text style={QUESTION_TEXT}>{"E: " + card.eFactor}</Text>
@@ -62,61 +49,6 @@ export function CardComponent({ card, keepCard, releaseCard }: QuestionProps) {
 
         <Text style={QUESTION_TEXT}>{isRevialed ? card.answer : card.question}</Text>
       </View>
-
-      {isRevialed ? (
-        <View>
-          <Button
-            testID="bad-question-answer-button"
-            style={ANSWER}
-            textStyle={ANSWER_TEXT}
-            tx="examinerScreen.answerBad"
-            onPress={() => {
-              setIsRevialed(false)
-              keepCard()
-            }}
-          />
-          <Button
-            testID="difficult-question-answer-button"
-            style={ANSWER}
-            textStyle={ANSWER_TEXT}
-            tx="examinerScreen.answerDiffucult"
-            onPress={() => {
-              setIsRevialed(false)
-              releaseCard(AnswerLevel.DIFFICULT)
-            }}
-          />
-          <Button
-            testID="good-question-answer-button"
-            style={ANSWER}
-            textStyle={ANSWER_TEXT}
-            tx="examinerScreen.answerGood"
-            onPress={() => {
-              setIsRevialed(false)
-              releaseCard(AnswerLevel.GOOD)
-            }}
-          />
-          <Button
-            testID="excellent-question-answer-button"
-            style={ANSWER}
-            textStyle={ANSWER_TEXT}
-            tx="examinerScreen.answerExcellent"
-            onPress={() => {
-              setIsRevialed(false)
-              releaseCard(AnswerLevel.EXCELLENT)
-            }}
-          />
-        </View>
-      ) : (
-        <View>
-          <Button
-            testID="show-answer-button"
-            style={ANSWER}
-            textStyle={ANSWER_TEXT}
-            tx="examinerScreen.showAnswer"
-            onPress={() => setIsRevialed(true)}
-          />
-        </View>
-      )}
     </View>
   )
 }

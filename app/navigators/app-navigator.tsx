@@ -16,7 +16,7 @@ export type NavigatorParamList = {
   examiner: undefined
   settings: undefined
   deckEditor: { deck: Deck }
-  cardEditor: { card?: Card | null }
+  cardEditor: { card?: Card | null; deckName: string }
 }
 
 const Stack = createNativeStackNavigator<NavigatorParamList>()

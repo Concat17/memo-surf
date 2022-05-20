@@ -17,17 +17,3 @@ test("can be created", () => {
 test("can see questions count", () => {
   expect(deck.numberOfCards).toBe(0)
 })
-
-test("can add and delete question", () => {
-  const question = CardModel.create({
-    id: v4(),
-    question: "What is the best animal?",
-    answer: "Crab",
-  })
-
-  deck.addQuestion(question)
-  expect(deck.numberOfCards).toBe(1)
-
-  deck.deleteQuestion(question)
-  expect(deck.numberOfCards).toBe(0)
-})

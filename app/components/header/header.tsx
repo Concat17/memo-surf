@@ -6,7 +6,7 @@ import { Text } from "../text/text"
 import { Icon } from "../icon/icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
-import { MenuIcon } from "../../icons/icons/MenuIcon"
+import { MenuIcon } from "../icons/MenuIcon"
 
 // static styles
 const ROOT: ViewStyle = {

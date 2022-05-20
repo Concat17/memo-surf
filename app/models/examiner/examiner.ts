@@ -84,9 +84,6 @@ export const ExaminerModel = types
         case AnswerLevel.GOOD:
           quality = 2
           break
-        case AnswerLevel.EXCELLENT:
-          quality = 3
-          break
       }
 
       // easiness factor

@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, ViewStyle, TextStyle, TextInput } from "react-native"
+import { View, ViewStyle, TextStyle, TextInput, Text } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import { Screen, GradientBackground, Header, Button } from "../../components"
@@ -7,12 +7,15 @@ import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 
 import { ThemeContext } from "../../app"
-import { ArrowBackIcon } from "../../icons/icons/ArrowBackIcon"
+import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
+import { useStores } from "../../models"
 
 const FULL: ViewStyle = { flex: 1 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
+  marginTop: 10,
+  padding: spacing[3],
 }
 
 const HEADER: TextStyle = {
@@ -34,6 +37,15 @@ const TEXT: TextStyle = {
   fontFamily: typography.primary,
 }
 
+const HINT_TEXT: TextStyle = {
+  ...TEXT,
+  ...BOLD,
+  fontSize: 13,
+  letterSpacing: 2,
+
+  marginBottom: 8,
+}
+
 const EDIT: ViewStyle = {
   paddingVertical: spacing[2],
   paddingHorizontal: spacing[2],
@@ -43,6 +55,12 @@ const EDIT: ViewStyle = {
 const EDIT_INPUT: ViewStyle = {
   ...TEXT,
   padding: 10,
+  borderWidth: 1,
+  borderRadius: 3,
+  borderStyle: "solid",
+  borderColor: "red",
+
+  marginBottom: 15,
 }
 
 const EDIT_TEXT: TextStyle = {
@@ -58,42 +76,53 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
       navigation.goBack()
     }
 
-    const { card } = route.params
+    const { collection } = useStores()
+
+    const { card, deckName } = route.params
 
     const [question, setQuestion] = React.useState(card?.question ?? "")
     const [answer, setAnswer] = React.useState(card?.answer ?? "")
 
     const { theme } = React.useContext(ThemeContext)
 
+    const deck = collection.getDeckByName(deckName)
+
     return (
       <View style={FULL}>
         <GradientBackground colors={[theme.colors.background, theme.colors.background]} />
-        <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Header
-            left={<ArrowBackIcon onPress={goBack} fill={theme.colors.primary} />}
-            headerTx="editorScreen.header"
-            style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
-            titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}
-          />
+        <Header
+          left={<ArrowBackIcon onPress={goBack} fill={theme.colors.primary} />}
+          headerTx="editorScreen.header"
+          style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
+          titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}
+        />
+        <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <Text style={HINT_TEXT}>Enter question</Text>
           <TextInput
-            style={EDIT_INPUT}
+            style={{ ...EDIT_INPUT, borderColor: theme.colors.primary }}
             defaultValue={question}
             onChangeText={setQuestion}
             placeholder="Question"
           />
+          <Text style={HINT_TEXT}>Enter answer</Text>
           <TextInput
-            style={EDIT_INPUT}
+            style={{ ...EDIT_INPUT, borderColor: theme.colors.primary }}
             defaultValue={answer}
             onChangeText={setAnswer}
             placeholder="Answer"
           />
           <Button
             testID="next-screen-button"
-            style={EDIT}
-            textStyle={EDIT_TEXT}
+            style={{ ...EDIT, backgroundColor: theme.colors.background }}
+            textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
             tx="common.save"
             onPress={() => {
-              card.edit(question, answer)
+              if (card) {
+                card.edit(question, answer)
+              } else {
+                deck.addQuestion(question, answer)
+              }
+
               goBack()
             }}
           />
