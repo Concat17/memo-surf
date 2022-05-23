@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react"
+import React, { FC, useCallback, useState, useEffect } from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"

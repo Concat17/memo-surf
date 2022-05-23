@@ -12,7 +12,8 @@ type CardStats = {
 export const DeckModel = types
   .model("Deck")
   .props({
-    name: types.identifier,
+    id: types.identifier,
+    name: types.string,
     cards: types.optional(types.array(CardModel), []),
   })
   .extend(withEnvironment)
@@ -62,6 +63,7 @@ export interface DeckStoreSnapshot extends DeckSnapshotType {}
 export const createDeckDefaultModel = () => types.optional(DeckModel, {})
 
 export type DeckRaw = {
+  id: string
   name: string
   cards: Array<{ question: string; answer: string; interval?: number }>
 }

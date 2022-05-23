@@ -55,8 +55,9 @@ interface DeckProps {
 }
 
 export const Decks = withMenuContext<DeckProps & MenuContextProps>(
-  observer(({ ctx, nav, decks }) => {
+  observer(({ ctx, nav, decks: initDecks }) => {
     const { collection, examiner } = useStores()
+    const [decks, setDecks] = useState(initDecks ?? [])
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null)
     const goExaminerScreen = useCallback(() => nav.navigate("examiner"), [nav])
     const startLesson = useCallback(
@@ -67,6 +68,15 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
       },
       [examiner, goExaminerScreen],
     )
+
+    useEffect(() => {
+      nav.addListener("focus", () => {
+        if (collection?.decks) {
+          console.log("col", collection)
+          setDecks([...collection.decks])
+        }
+      })
+    }, [collection, nav])
 
     const exportDeck = async (deck: Deck) => {
       const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync()

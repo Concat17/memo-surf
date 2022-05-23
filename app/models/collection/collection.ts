@@ -23,10 +23,8 @@ export const CollectionModel = types
         id: v4(),
         interval: c.interval,
       }))
-      const filledDeck = { name: deck.name, cards: filledCards }
+      const filledDeck = { id: deck.id, name: deck.name, cards: filledCards }
 
-      // self.decks.push(filledDeck)
-      console.log("add")
       self.decks = cast([...self.decks, filledDeck])
     },
     createDeck(name: string) {
