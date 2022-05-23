@@ -36,6 +36,9 @@ export const DeckModel = types
     deleteQuestion: (card: Card) => {
       destroy(card)
     },
+    changeDeckName(name: string) {
+      self.name = name
+    },
     changeCardStats(card: Card, { eFactor, interval, repetitions }: CardStats) {
       card.eFactor = eFactor
       card.interval = interval

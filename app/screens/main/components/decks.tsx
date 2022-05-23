@@ -88,6 +88,10 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
 
       await FileSystem.writeAsStringAsync(uri, JSON.stringify(preparedDeck))
     }
+    const goDeckParamsScreen = useCallback(
+      (deck: Deck) => nav.navigate("deckParamsEditor", { deck }),
+      [nav],
+    )
 
     const goEditorScreen = useCallback(
       (deck: Deck) => {
@@ -100,7 +104,8 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
         <Menu name="deck-options" style={MENU_STYLE}>
           <MenuTrigger />
           <MenuOptions customStyles={{ optionWrapper: MENU_OPTIONS_STYLE }}>
-            <MenuOption onSelect={() => goEditorScreen(selectedDeck)} text="Edit" />
+            <MenuOption onSelect={() => goEditorScreen(selectedDeck)} text="Edit cards" />
+            <MenuOption onSelect={() => goDeckParamsScreen(selectedDeck)} text="Edit" />
             <MenuOption onSelect={() => exportDeck(selectedDeck)} text="Export" />
             <MenuOption onSelect={() => collection.deleteDeck(selectedDeck)} text="Delete" />
           </MenuOptions>

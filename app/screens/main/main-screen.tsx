@@ -13,6 +13,7 @@ import { ThemeContext } from "../../app"
 import { Decks } from "./components/decks"
 import { SettingsIcon } from "../../components/icons/SettingsIcon"
 import { ImportIcon } from "../../components/icons/ImportIcon"
+import { AddIcon } from "../../components/icons/AddIcon"
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   position: "relative",
@@ -35,10 +36,11 @@ const HEADER_TITLE: TextStyle = {
   letterSpacing: 1.5,
 }
 
-const MAIN_CONTAINER: ViewStyle = {
-  backgroundColor: color.transparent,
-  paddingHorizontal: spacing[4],
-  marginTop: spacing[4],
+const RIGHT_ICONS: ViewStyle = {
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
 }
 
 export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = observer(
@@ -68,7 +70,12 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
                 fill={theme.colors.primary}
               />
             }
-            right={<ImportIcon onPress={importDeck} fill={theme.colors.primary} />}
+            right={
+              <View style={RIGHT_ICONS}>
+                <ImportIcon onPress={importDeck} fill={theme.colors.primary} />
+                <AddIcon fill={theme.colors.primary} />
+              </View>
+            }
             headerTx="mainScreen.header"
             style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
             titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}

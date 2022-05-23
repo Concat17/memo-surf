@@ -10,12 +10,14 @@ import { SettingsScreen } from "../screens/settings/settings-screen"
 import { DeckEditorScreen } from "../screens/deck-editor/deck-editor-screen"
 import { Card } from "../models/card/card"
 import { CardEditorScreen } from "../screens/card-editor/card-editor-screen"
+import { DeckParamsScreen } from "../screens/deck-params/deck-params-screen"
 
 export type NavigatorParamList = {
   main: undefined
   examiner: undefined
   settings: undefined
   deckEditor: { deck: Deck }
+  deckParamsEditor: { deck?: Deck | null }
   cardEditor: { card?: Card | null; deckName: string }
 }
 
@@ -32,6 +34,7 @@ const AppStack = () => {
       <Stack.Screen name="examiner" component={ExaminerScreen} />
       <Stack.Screen name="main" component={MainScreen} />
       <Stack.Screen name="deckEditor" component={DeckEditorScreen} />
+      <Stack.Screen name="deckParamsEditor" component={DeckParamsScreen} />
       <Stack.Screen name="settings" component={SettingsScreen} />
       <Stack.Screen name="cardEditor" component={CardEditorScreen} />
     </Stack.Navigator>

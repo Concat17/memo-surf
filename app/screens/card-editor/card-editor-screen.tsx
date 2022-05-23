@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { View, ViewStyle, TextStyle, TextInput, Text } from "react-native"
+import { View, ViewStyle, TextStyle, TextInput, Text, Alert } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import { Screen, GradientBackground, Header, Button } from "../../components"
@@ -9,6 +9,7 @@ import { NavigatorParamList } from "../../navigators"
 import { ThemeContext } from "../../app"
 import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
 import { useStores } from "../../models"
+import { TrashIcon } from "../../components/icons/TrashIcon"
 
 const FULL: ViewStyle = { flex: 1 }
 const BOLD: TextStyle = { fontWeight: "bold" }
@@ -87,11 +88,37 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
 
     const deck = collection.getDeckByName(deckName)
 
+    const showAlert = () =>
+      Alert.alert(
+        "Confirm removing card",
+        "Do you want to delete card?",
+        [
+          {
+            text: "Delete",
+            onPress: () => {
+              deck.deleteQuestion(card)
+              goBack()
+            },
+            style: "destructive",
+          },
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+        ],
+        {
+          cancelable: true,
+        },
+      )
+
     return (
       <View style={FULL}>
         <GradientBackground colors={[theme.colors.background, theme.colors.background]} />
         <Header
           left={<ArrowBackIcon onPress={goBack} fill={theme.colors.primary} />}
+          right={
+            card ? <TrashIcon onPress={showAlert} fill={theme.colors.primary} /> : <View></View>
+          }
           headerTx="editorScreen.header"
           style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
           titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}

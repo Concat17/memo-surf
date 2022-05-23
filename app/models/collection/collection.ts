@@ -29,6 +29,13 @@ export const CollectionModel = types
       console.log("add")
       self.decks = cast([...self.decks, filledDeck])
     },
+    createDeck(name: string) {
+      const deck = DeckModel.create({
+        name,
+      })
+
+      self.decks.push(deck)
+    },
     deleteDeck: (deck: Deck) => {
       destroy(deck)
     },
