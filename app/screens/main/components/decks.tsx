@@ -98,6 +98,38 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
 
       await FileSystem.writeAsStringAsync(uri, JSON.stringify(preparedDeck))
     }
+
+    const createFolder = async () => {
+      // const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync(
+      //   "content://com.android.externalstorage.documents/tree/primary%3AMemoSurf",
+      // )
+
+      // if (!permissions.granted) {
+      //   return
+      // }
+
+      const path = "content://com.android.externalstorage.documents/tree/primary%3AMemoSurf"
+
+      // const path = permissions.directoryUri
+
+      const root = await StorageAccessFramework.readDirectoryAsync(path)
+      console.log("dir", root)
+      const res = await FileSystem.getInfoAsync(
+        "content://com.android.externalstorage.documents/tree/primary%3AMemoSurf/crab.jpg",
+      )
+
+      console.log("crab", res)
+
+      // if (!res.exists) {
+      //   await FileSystem.makeDirectoryAsync(path)
+      // }
+
+      // const uri = await StorageAccessFramework.createFileAsync(
+      //   path,
+      //   "test1" + ".json",
+      //   "application/json",
+      // )
+    }
     const goDeckParamsScreen = useCallback(
       (deck: Deck) => nav.navigate("deckParamsEditor", { deck }),
       [nav],
@@ -118,6 +150,7 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
             <MenuOption onSelect={() => goDeckParamsScreen(selectedDeck)} text="Edit" />
             <MenuOption onSelect={() => exportDeck(selectedDeck)} text="Export" />
             <MenuOption onSelect={() => collection.deleteDeck(selectedDeck)} text="Delete" />
+            <MenuOption onSelect={() => createFolder()} text="test" />
           </MenuOptions>
         </Menu>
         <FlatList

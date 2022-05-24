@@ -1,9 +1,10 @@
 import * as React from "react"
-import { Text, TextStyle, View, ViewStyle } from "react-native"
+import { Text, TextStyle, View, ViewStyle, Image } from "react-native"
 import { Button } from "../../../components"
 import { Card } from "../../../models/card/card"
 import { color, spacing, typography } from "../../../theme"
 import { AnswerLevel } from "../../../types/AnswerLevel"
+import * as ImagePicker from "expo-image-picker"
 
 const TEXT: TextStyle = {
   color: color.palette.white,
@@ -43,11 +44,17 @@ export function CardComponent({ card, isRevialed }: QuestionProps) {
         <View>
           <Text style={QUESTION_TEXT}>{"Interval: " + card.interval}</Text>
         </View>
+
         <View>
           <Text style={QUESTION_TEXT}>{"Repetition: " + card.repetitions}</Text>
         </View>
-
+        {/* // eslint-disable-next-line react-native/no-inline-styles */}
         <Text style={QUESTION_TEXT}>{isRevialed ? card.answer : card.question}</Text>
+        {card.imagePath ? (
+          <Image source={{ uri: card.imagePath }} style={{ width: 200, height: 200 }} />
+        ) : (
+          <View />
+        )}
       </View>
     </View>
   )

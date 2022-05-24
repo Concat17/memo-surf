@@ -4,7 +4,8 @@
     "cancel": "Cancel",
     "back": "Back",
     "save": "Save",
-    "add": "Add"
+    "add": "Add",
+    "pickImage": "Pick image"
   },
   "errors": {
     "invalidEmail": "Invalid email address."

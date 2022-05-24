@@ -25,11 +25,12 @@ export const DeckModel = types
 
       return self.cards[0]
     },
-    addQuestion: (q: string, a: string) => {
+    addQuestion: (q: string, a: string, imagePath?: string) => {
       const question = CardModel.create({
         id: v4(),
         question: q,
         answer: a,
+        imagePath: imagePath ?? "",
       })
 
       self.cards.push(question)

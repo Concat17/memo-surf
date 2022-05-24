@@ -6,14 +6,19 @@ export const CardModel = types
     id: types.identifier,
     question: types.string,
     answer: types.string,
+    imagePath: types.optional(types.string, ""),
     eFactor: types.optional(types.number, 2.5),
     repetitions: types.optional(types.number, 0),
     interval: types.optional(types.number, 0),
   })
   .actions((self) => ({
-    edit(question: string, answer: string) {
+    edit(question: string, answer: string, imagePath?: string) {
       self.question = question
       self.answer = answer
+
+      if (imagePath) {
+        self.imagePath = imagePath
+      }
     },
   }))
 

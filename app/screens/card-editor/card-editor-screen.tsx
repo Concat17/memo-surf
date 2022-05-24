@@ -1,10 +1,11 @@
 import React, { FC } from "react"
-import { View, ViewStyle, TextStyle, TextInput, Text, Alert } from "react-native"
+import { View, ViewStyle, TextStyle, TextInput, Text, Alert, Image, ImageStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import { Screen, GradientBackground, Header, Button } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
+import * as ImagePicker from "expo-image-picker"
 
 import { ThemeContext } from "../../app"
 import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
@@ -71,6 +72,11 @@ const EDIT_TEXT: TextStyle = {
   letterSpacing: 2,
 }
 
+const PICTURE_STYLE: ImageStyle = {
+  width: 200,
+  height: 200,
+}
+
 export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEditor">> = observer(
   ({ navigation, route }) => {
     const goBack = () => {
@@ -83,6 +89,7 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
 
     const [question, setQuestion] = React.useState(card?.question ?? "")
     const [answer, setAnswer] = React.useState(card?.answer ?? "")
+    const [imagePath, setimagePath] = React.useState(card?.imagePath ?? "")
 
     const { theme } = React.useContext(ThemeContext)
 
@@ -111,6 +118,21 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
         },
       )
 
+    const pickImage = async () => {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      })
+
+      console.log(result)
+
+      if (result.cancelled === false) {
+        setimagePath(result.uri)
+      }
+    }
+
     return (
       <View style={FULL}>
         <GradientBackground colors={[theme.colors.background, theme.colors.background]} />
@@ -138,6 +160,14 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
             onChangeText={setAnswer}
             placeholder="Answer"
           />
+          {imagePath ? <Image source={{ uri: imagePath }} style={PICTURE_STYLE} /> : <View />}
+          <Button
+            testID="next-screen-button"
+            style={{ ...EDIT, backgroundColor: theme.colors.background }}
+            textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
+            tx="common.pickImage"
+            onPress={pickImage}
+          />
           <Button
             testID="next-screen-button"
             style={{ ...EDIT, backgroundColor: theme.colors.background }}
@@ -145,9 +175,9 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
             tx="common.save"
             onPress={() => {
               if (card) {
-                card.edit(question, answer)
+                card.edit(question, answer, imagePath)
               } else {
-                deck.addQuestion(question, answer)
+                deck.addQuestion(question, answer, imagePath)
               }
 
               goBack()
