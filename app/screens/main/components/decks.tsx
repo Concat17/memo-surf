@@ -51,9 +51,6 @@ const MENU_OPTIONS_STYLE: ViewStyle = {
   padding: 10,
   justifyContent: "center",
   alignItems: "center",
-
-  // borderStyle: "solid",
-  // borderWidth: 1,
 }
 
 const MENU_CONTAINER_STYLE: ViewStyle = {

@@ -36,6 +36,13 @@
     "questionPlaceholder": "Question",
     "answerPlaceholder": "Answer"
   },
+  "settingsScreen": {
+    "header": "Settings",
+    "display": "Display",
+    "learn": "Learn",
+    "switchTheme": "Switch theme",
+    "cardPerLesson": "Cards per lesson"
+  },
   "demoScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",

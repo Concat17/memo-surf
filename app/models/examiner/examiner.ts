@@ -119,6 +119,9 @@ export const ExaminerModel = types
       self.currentCardIndex = 0
       self.round = 0
     },
+    changeLearnCount(newLearnCount: number) {
+      self.learnCount = newLearnCount
+    },
   }))
 
 type ExaminerType = Instance<typeof ExaminerModel>
