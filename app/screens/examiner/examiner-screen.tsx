@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useMemo } from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
@@ -17,6 +17,8 @@ const BOLD: TextStyle = { fontWeight: "bold" }
 const CONTAINER: ViewStyle = {
   position: "relative",
   backgroundColor: color.transparent,
+
+  padding: 10,
 }
 
 const HEADER: TextStyle = {
@@ -64,6 +66,18 @@ const ANSWERS: ViewStyle = {
   justifyContent: "space-between",
 }
 
+const CARD_COUNT: ViewStyle = {
+  alignSelf: "center",
+}
+
+const PLACEHOLDER: ViewStyle = {
+  width: 24,
+}
+const CARD_COUNT_TEXT: TextStyle = {
+  ...BOLD,
+  fontSize: 15,
+}
+
 export const ExaminerScreen: FC<StackScreenProps<NavigatorParamList, "examiner">> = observer(
   ({ navigation }) => {
     const { theme } = React.useContext(ThemeContext)
@@ -79,13 +93,21 @@ export const ExaminerScreen: FC<StackScreenProps<NavigatorParamList, "examiner">
     return (
       <View style={FULL}>
         <GradientBackground colors={[theme.colors.background, theme.colors.background]} />
+        <Header
+          left={<ArrowBackIcon onPress={goBack} fill={theme.colors.primary} />}
+          right={<View style={PLACEHOLDER}></View>}
+          style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
+          titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}
+          headerTx="examinerScreen.header"
+        />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
-          <Header
-            left={<ArrowBackIcon onPress={goBack} fill={theme.colors.primary} />}
-            style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
-            titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}
-            headerTx="examinerScreen.header"
-          />
+          {question && (
+            <View style={CARD_COUNT}>
+              <Text
+                style={{ ...CARD_COUNT_TEXT, color: theme.colors.primary }}
+              >{`Questions left: ${examiner.cards.length}`}</Text>
+            </View>
+          )}
           {!question ? (
             <View>
               <Text>No questions to learn</Text>
@@ -94,51 +116,55 @@ export const ExaminerScreen: FC<StackScreenProps<NavigatorParamList, "examiner">
             <CardComponent card={question} isRevialed={isRevialed} />
           )}
 
-          {question && isRevialed ? (
-            <View style={ANSWERS}>
-              <Button
-                testID="bad-question-answer-button"
-                style={{ ...ANSWER, backgroundColor: theme.colors.background }}
-                textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
-                tx="examinerScreen.answerBad"
-                onPress={() => {
-                  setIsRevialed(false)
-                  examiner.keepCard()
-                }}
-              />
-              <Button
-                testID="difficult-question-answer-button"
-                style={{ ...ANSWER, backgroundColor: theme.colors.background }}
-                textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
-                tx="examinerScreen.answerDiffucult"
-                onPress={() => {
-                  setIsRevialed(false)
-                  examiner.releaseCard(AnswerLevel.DIFFICULT)
-                }}
-              />
-              <Button
-                testID="good-question-answer-button"
-                style={{ ...ANSWER, backgroundColor: theme.colors.background }}
-                textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
-                tx="examinerScreen.answerGood"
-                onPress={() => {
-                  setIsRevialed(false)
-                  examiner.releaseCard(AnswerLevel.GOOD)
-                }}
-              />
+          {question && (
+            <View>
+              {isRevialed ? (
+                <View style={ANSWERS}>
+                  <Button
+                    testID="bad-question-answer-button"
+                    style={{ ...ANSWER, backgroundColor: theme.colors.background }}
+                    textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
+                    tx="examinerScreen.answerBad"
+                    onPress={() => {
+                      setIsRevialed(false)
+                      examiner.keepCard()
+                    }}
+                  />
+                  <Button
+                    testID="difficult-question-answer-button"
+                    style={{ ...ANSWER, backgroundColor: theme.colors.background }}
+                    textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
+                    tx="examinerScreen.answerDiffucult"
+                    onPress={() => {
+                      setIsRevialed(false)
+                      examiner.releaseCard(AnswerLevel.DIFFICULT)
+                    }}
+                  />
+                  <Button
+                    testID="good-question-answer-button"
+                    style={{ ...ANSWER, backgroundColor: theme.colors.background }}
+                    textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
+                    tx="examinerScreen.answerGood"
+                    onPress={() => {
+                      setIsRevialed(false)
+                      examiner.releaseCard(AnswerLevel.GOOD)
+                    }}
+                  />
+                </View>
+              ) : (
+                <Button
+                  testID="show-answer-button"
+                  style={{
+                    ...SHOW_ANSWER,
+                    backgroundColor: theme.colors.background,
+                    borderColor: theme.colors.primary,
+                  }}
+                  textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
+                  tx="examinerScreen.showAnswer"
+                  onPress={() => setIsRevialed(true)}
+                />
+              )}
             </View>
-          ) : (
-            <Button
-              testID="show-answer-button"
-              style={{
-                ...SHOW_ANSWER,
-                backgroundColor: theme.colors.background,
-                borderColor: theme.colors.primary,
-              }}
-              textStyle={{ ...ANSWER_TEXT, color: theme.colors.primary }}
-              tx="examinerScreen.showAnswer"
-              onPress={() => setIsRevialed(true)}
-            />
           )}
         </Screen>
       </View>

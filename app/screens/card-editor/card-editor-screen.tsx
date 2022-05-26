@@ -75,6 +75,8 @@ const EDIT_TEXT: TextStyle = {
 const PICTURE_STYLE: ImageStyle = {
   width: 200,
   height: 200,
+
+  alignSelf: "center",
 }
 
 export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEditor">> = observer(
@@ -163,14 +165,12 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
           />
           {imagePath ? <Image source={{ uri: imagePath }} style={PICTURE_STYLE} /> : <View />}
           <Button
-            testID="next-screen-button"
             style={{ ...EDIT, backgroundColor: theme.colors.background }}
             textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
             tx="common.pickImage"
             onPress={pickImage}
           />
           <Button
-            testID="next-screen-button"
             style={{ ...EDIT, backgroundColor: theme.colors.background }}
             textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
             tx="common.save"

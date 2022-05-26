@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Text, TextStyle, View, ViewStyle, Image } from "react-native"
+import { Text, TextStyle, View, ViewStyle, Image, ImageStyle } from "react-native"
 import { Button } from "../../../components"
 import { Card } from "../../../models/card/card"
 import { color, spacing, typography } from "../../../theme"
@@ -27,6 +27,14 @@ const QUESTION: ViewStyle = {
   marginTop: 30,
 }
 
+const IMAGE: ImageStyle = {
+  width: 200,
+  height: 200,
+  marginTop: 20,
+  alignSelf: "center",
+  justifyContent: "center",
+}
+
 const FULL: ViewStyle = { flex: 1, flexGrow: 1, justifyContent: "space-between" }
 
 interface QuestionProps {
@@ -38,7 +46,7 @@ export function CardComponent({ card, isRevialed }: QuestionProps) {
   return (
     <View style={FULL}>
       <View style={QUESTION}>
-        <View>
+        {/* <View>
           <Text style={QUESTION_TEXT}>{"E: " + card.eFactor}</Text>
         </View>
         <View>
@@ -47,14 +55,10 @@ export function CardComponent({ card, isRevialed }: QuestionProps) {
 
         <View>
           <Text style={QUESTION_TEXT}>{"Repetition: " + card.repetitions}</Text>
-        </View>
+        </View> */}
         {/* // eslint-disable-next-line react-native/no-inline-styles */}
         <Text style={QUESTION_TEXT}>{isRevialed ? card.answer : card.question}</Text>
-        {card.imagePath ? (
-          <Image source={{ uri: card.imagePath }} style={{ width: 200, height: 200 }} />
-        ) : (
-          <View />
-        )}
+        {card.imagePath ? <Image source={{ uri: card.imagePath }} style={IMAGE} /> : <View />}
       </View>
     </View>
   )

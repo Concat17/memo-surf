@@ -186,9 +186,9 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
           >
             <MenuOption onSelect={() => goEditorScreen(selectedDeck)} text="Cards" />
             <MenuOption onSelect={() => goDeckParamsScreen(selectedDeck)} text="Edit" />
-            <MenuOption onSelect={() => exportDeck(selectedDeck)} text="Export" />
+            {/* <MenuOption onSelect={() => exportDeck(selectedDeck)} text="Export" /> */}
             <MenuOption onSelect={() => collection.deleteDeck(selectedDeck)} text="Delete" />
-            <MenuOption onSelect={() => createFolder(selectedDeck)} text="test" />
+            {/* <MenuOption onSelect={() => createFolder(selectedDeck)} text="test" /> */}
           </MenuOptions>
         </Menu>
         <FlatList

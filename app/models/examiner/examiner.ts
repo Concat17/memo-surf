@@ -87,7 +87,8 @@ export const ExaminerModel = types
       }
 
       // easiness factor
-      eFactor = Math.max(1.3, eFactor + 0.1 - (3.0 - quality) * (0.08 + (3.0 - quality) * 0.02))
+      const newE = Math.max(1.3, eFactor + 0.1 - (3.0 - quality) * (0.08 + (3.0 - quality) * 0.02))
+      eFactor = parseFloat(newE.toFixed(2))
 
       // repetitions
       if (quality < 2) {
