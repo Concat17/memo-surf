@@ -101,7 +101,8 @@ export const DeckParamsScreen: FC<
           style={{ ...EDIT_INPUT, borderColor: theme.colors.primary }}
           defaultValue={name}
           onChangeText={setName}
-          placeholder="Question"
+          placeholderTextColor="grey"
+          placeholder="Deck name"
         />
 
         <Button

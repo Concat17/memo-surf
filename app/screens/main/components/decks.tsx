@@ -18,6 +18,7 @@ import { DeckComponent } from "./deck"
 import { observer } from "mobx-react-lite"
 import * as MediaLibrary from "expo-media-library"
 import React, { FC, useCallback, useEffect, useState } from "react"
+import { ThemeContext } from "../../../app"
 
 const FULL: ViewStyle = { flex: 1 }
 
@@ -40,14 +41,24 @@ const MENU_STYLE: ViewStyle = {
   top: 0,
   left: 0,
   right: 0,
-  bottom: 0,
-  justifyContent: "center",
+  // bottom: 0,
+  // justifyContent: "center",
   alignItems: "center",
   padding: 10,
 }
 
 const MENU_OPTIONS_STYLE: ViewStyle = {
   padding: 10,
+  justifyContent: "center",
+  alignItems: "center",
+
+  // borderStyle: "solid",
+  // borderWidth: 1,
+}
+
+const MENU_CONTAINER_STYLE: ViewStyle = {
+  borderStyle: "solid",
+  borderWidth: 1,
 }
 
 interface DeckProps {
@@ -57,6 +68,7 @@ interface DeckProps {
 
 export const Decks = withMenuContext<DeckProps & MenuContextProps>(
   observer(({ ctx, nav, decks: initDecks }) => {
+    const { theme } = React.useContext(ThemeContext)
     const { collection, examiner } = useStores()
     const [decks, setDecks] = useState(initDecks ?? [])
     const [selectedDeck, setSelectedDeck] = useState<Deck | null>(null)
@@ -165,7 +177,16 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
       <View style={FULL}>
         <Menu name="deck-options" style={MENU_STYLE}>
           <MenuTrigger />
-          <MenuOptions customStyles={{ optionWrapper: MENU_OPTIONS_STYLE }}>
+          <MenuOptions
+            optionsContainerStyle={{ ...MENU_CONTAINER_STYLE, borderColor: theme.colors.primary }}
+            customStyles={{
+              optionWrapper: {
+                ...MENU_OPTIONS_STYLE,
+                backgroundColor: theme.colors.background,
+              },
+              optionText: { color: theme.colors.primary },
+            }}
+          >
             <MenuOption onSelect={() => goEditorScreen(selectedDeck)} text="Cards" />
             <MenuOption onSelect={() => goDeckParamsScreen(selectedDeck)} text="Edit" />
             <MenuOption onSelect={() => exportDeck(selectedDeck)} text="Export" />
