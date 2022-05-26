@@ -82,7 +82,7 @@ export const DeckParamsScreen: FC<
 
   const { collection } = useStores()
 
-  const { deck } = route.params
+  const deck = route?.params?.deck
 
   const [name, setName] = React.useState(deck?.name ?? "")
 

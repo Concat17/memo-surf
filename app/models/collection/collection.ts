@@ -29,6 +29,7 @@ export const CollectionModel = types
     },
     createDeck(name: string) {
       const deck = DeckModel.create({
+        id: v4(),
         name,
       })
 

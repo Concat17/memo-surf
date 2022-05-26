@@ -47,6 +47,7 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
   ({ navigation }) => {
     const { theme } = React.useContext(ThemeContext)
     const { collection } = useStores()
+
     const importDeck = useCallback(async () => {
       const result = await DocumentPicker.getDocumentAsync({})
       if (result.type === "success") {
@@ -56,6 +57,10 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
         await collection.import(deck)
       }
     }, [collection])
+
+    const goDeckParamsScreen = useCallback(() => navigation.navigate("deckParamsEditor"), [
+      navigation,
+    ])
 
     console.log("render", theme)
     return (
@@ -72,8 +77,8 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
             }
             right={
               <View style={RIGHT_ICONS}>
-                <ImportIcon onPress={importDeck} fill={theme.colors.primary} />
-                <AddIcon fill={theme.colors.primary} />
+                {/* <ImportIcon onPress={importDeck} fill={theme.colors.primary} /> */}
+                <AddIcon fill={theme.colors.primary} onPress={goDeckParamsScreen} />
               </View>
             }
             headerTx="mainScreen.header"

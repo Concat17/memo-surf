@@ -16,6 +16,7 @@ import {
 } from "react-native-popup-menu"
 import { DeckComponent } from "./deck"
 import { observer } from "mobx-react-lite"
+import * as MediaLibrary from "expo-media-library"
 import React, { FC, useCallback, useEffect, useState } from "react"
 
 const FULL: ViewStyle = { flex: 1 }
@@ -99,36 +100,55 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
       await FileSystem.writeAsStringAsync(uri, JSON.stringify(preparedDeck))
     }
 
-    const createFolder = async () => {
-      // const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync(
-      //   "content://com.android.externalstorage.documents/tree/primary%3AMemoSurf",
-      // )
+    // 1 gather files
+    // 2 zip files
+    // 3 move zip into dest folder
 
-      // if (!permissions.granted) {
+    const createFolder = async (deck: Deck) => {
+      // const mediaLibraryPermissions = await MediaLibrary.requestPermissionsAsync()
+      // if (!mediaLibraryPermissions.granted) {
       //   return
       // }
+      // const asset = await MediaLibrary.createAssetAsync(
+      //   "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540concat17%252FMemoSurf/ImagePicker/e2f608ac-61f8-46fc-8c1c-bd3adcefebc5.jpg",
+      // )
+      // await MediaLibrary.createAlbumAsync("KekLol", asset, false)
 
-      const path = "content://com.android.externalstorage.documents/tree/primary%3AMemoSurf"
+      const album = await MediaLibrary.getAlbumAsync("KekLol")
+      console.log("album", album)
+      console.log("loc", album.locationNames)
+      const assets = await MediaLibrary.getAssetsAsync({ album: album.id })
+      console.log("assets", assets)
+      // if (assets.length) {
+      //   await MediaLibrary.addAssetsToAlbumAsync(assets, newAlbum, false);
+      // }
+    }
 
-      // const path = permissions.directoryUri
+    const createFolderExternal = async (deck: Deck) => {
+      const permissions = await StorageAccessFramework.requestDirectoryPermissionsAsync()
 
-      const root = await StorageAccessFramework.readDirectoryAsync(path)
-      console.log("dir", root)
-      const res = await FileSystem.getInfoAsync(
-        "content://com.android.externalstorage.documents/tree/primary%3AMemoSurf/crab.jpg",
+      if (!permissions.granted) {
+        return
+      }
+
+      const grantedPath = permissions.directoryUri
+      console.log("permissions granted", grantedPath)
+
+      const path = await StorageAccessFramework.makeDirectoryAsync(grantedPath, deck.name)
+      console.log("folder created", path)
+
+      const preparedDeck = {
+        ...deck,
+        cards: deck.cards.map((c) => ({ ...c, interval: 0, eFactor: 0, repetitions: 0 })),
+      }
+
+      const uri = await StorageAccessFramework.createFileAsync(
+        path,
+        deck.name + ".json",
+        "application/json",
       )
 
-      console.log("crab", res)
-
-      // if (!res.exists) {
-      //   await FileSystem.makeDirectoryAsync(path)
-      // }
-
-      // const uri = await StorageAccessFramework.createFileAsync(
-      //   path,
-      //   "test1" + ".json",
-      //   "application/json",
-      // )
+      await FileSystem.writeAsStringAsync(uri, JSON.stringify(preparedDeck))
     }
     const goDeckParamsScreen = useCallback(
       (deck: Deck) => nav.navigate("deckParamsEditor", { deck }),
@@ -146,11 +166,11 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
         <Menu name="deck-options" style={MENU_STYLE}>
           <MenuTrigger />
           <MenuOptions customStyles={{ optionWrapper: MENU_OPTIONS_STYLE }}>
-            <MenuOption onSelect={() => goEditorScreen(selectedDeck)} text="Edit cards" />
+            <MenuOption onSelect={() => goEditorScreen(selectedDeck)} text="Cards" />
             <MenuOption onSelect={() => goDeckParamsScreen(selectedDeck)} text="Edit" />
             <MenuOption onSelect={() => exportDeck(selectedDeck)} text="Export" />
             <MenuOption onSelect={() => collection.deleteDeck(selectedDeck)} text="Delete" />
-            <MenuOption onSelect={() => createFolder()} text="test" />
+            <MenuOption onSelect={() => createFolder(selectedDeck)} text="test" />
           </MenuOptions>
         </Menu>
         <FlatList

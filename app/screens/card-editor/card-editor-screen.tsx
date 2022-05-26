@@ -130,6 +130,7 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
 
       if (result.cancelled === false) {
         setimagePath(result.uri)
+        console.log("image", result.uri)
       }
     }
 
