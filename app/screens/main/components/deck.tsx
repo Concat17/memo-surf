@@ -47,7 +47,7 @@ export const DeckComponent = ({ deck, onPress, onLongPress }: DeckProps) => {
       onPress={onPress}
       onLongPress={onLongPress}
       activeOpacity={0.6}
-      underlayColor="#00263D"
+      underlayColor={theme.colors.background}
     >
       <View>
         <Text style={{ ...COLLECTION_NAME_TEXT, color: theme.colors.primary }}>{deck.name}</Text>

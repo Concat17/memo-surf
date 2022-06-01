@@ -5,6 +5,7 @@ import { Card } from "../../../models/card/card"
 import { color, spacing, typography } from "../../../theme"
 import { AnswerLevel } from "../../../types/AnswerLevel"
 import * as ImagePicker from "expo-image-picker"
+import { DevContext, ThemeContext } from "../../../app"
 
 const TEXT: TextStyle = {
   color: color.palette.white,
@@ -17,6 +18,13 @@ const QUESTION_TEXT: TextStyle = {
   ...BOLD,
   fontSize: 20,
   letterSpacing: 2,
+
+  textAlign: "center",
+}
+
+const QUESTION_INFO: TextStyle = {
+  ...TEXT,
+  color: "red",
 }
 
 const QUESTION: ViewStyle = {
@@ -43,21 +51,28 @@ interface QuestionProps {
 }
 
 export function CardComponent({ card, isRevialed }: QuestionProps) {
+  const { isDevMode } = React.useContext(DevContext)
+  const { theme } = React.useContext(ThemeContext)
   return (
     <View style={FULL}>
       <View style={QUESTION}>
-        {/* <View>
-          <Text style={QUESTION_TEXT}>{"E: " + card.eFactor}</Text>
-        </View>
-        <View>
-          <Text style={QUESTION_TEXT}>{"Interval: " + card.interval}</Text>
-        </View>
+        {isDevMode && (
+          <>
+            <View>
+              <Text style={QUESTION_INFO}>{"E: " + card.eFactor}</Text>
+            </View>
+            <View>
+              <Text style={QUESTION_INFO}>{"Interval: " + card.interval}</Text>
+            </View>
+            <View>
+              <Text style={QUESTION_INFO}>{"Repetition: " + card.repetitions}</Text>
+            </View>
+          </>
+        )}
 
-        <View>
-          <Text style={QUESTION_TEXT}>{"Repetition: " + card.repetitions}</Text>
-        </View> */}
-        {/* // eslint-disable-next-line react-native/no-inline-styles */}
-        <Text style={QUESTION_TEXT}>{isRevialed ? card.answer : card.question}</Text>
+        <Text style={{ ...QUESTION_TEXT, color: theme.colors.primary }}>
+          {isRevialed ? card.answer : card.question}
+        </Text>
         {card.imagePath ? <Image source={{ uri: card.imagePath }} style={IMAGE} /> : <View />}
       </View>
     </View>

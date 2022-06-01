@@ -39,6 +39,12 @@ interface IContext {
 
 export const ThemeContext = React.createContext<IContext | null>(null)
 
+interface IContextDev {
+  isDevMode: boolean
+  setIsDevMode: TypeSetState<boolean>
+}
+export const DevContext = React.createContext<IContextDev | null>(null)
+
 /**
  * This is the root component of our app.
  */
@@ -53,11 +59,14 @@ function App() {
   const [theme, setTheme] = useState<Theme>(DarkTheme)
   const [themeOption, setThemeOption] = useState<ThemeOption>("Dark")
 
+  const [isDevMode, setIsDevMode] = useState<boolean>(false)
   useEffect(() => {
     setTheme(themeOption === "Light" ? LightTheme : DarkTheme)
   }, [themeOption])
 
   const themeData = { theme, setThemeOption }
+
+  const devData = { isDevMode, setIsDevMode }
 
   // Kick off initial async loading actions, like loading fonts and RootStore
   useEffect(() => {
@@ -83,10 +92,12 @@ function App() {
           <ErrorBoundary catchErrors={"always"}>
             <MenuProvider>
               <ThemeContext.Provider value={themeData}>
-                <AppNavigator
-                  initialState={initialNavigationState}
-                  onStateChange={onNavigationStateChange}
-                />
+                <DevContext.Provider value={devData}>
+                  <AppNavigator
+                    initialState={initialNavigationState}
+                    onStateChange={onNavigationStateChange}
+                  />
+                </DevContext.Provider>
               </ThemeContext.Provider>
             </MenuProvider>
           </ErrorBoundary>

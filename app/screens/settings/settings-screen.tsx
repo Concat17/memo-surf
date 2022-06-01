@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite"
 import { Screen, Text, GradientBackground, Header, Button } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
-import { ThemeContext } from "../../app"
+import { DevContext, ThemeContext } from "../../app"
 import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
 import { useStores } from "../../models"
 
@@ -72,6 +72,7 @@ export const SettingsScreen: FC<StackScreenProps<NavigatorParamList, "settings">
     const { examiner } = useStores()
 
     const { theme, setThemeOption } = React.useContext(ThemeContext)
+    const { isDevMode, setIsDevMode } = React.useContext(DevContext)
 
     const [isEnabled, setIsEnabled] = useState(theme.name === "Light")
 
@@ -129,6 +130,25 @@ export const SettingsScreen: FC<StackScreenProps<NavigatorParamList, "settings">
                   if (!isNaN(cardCount)) examiner.changeLearnCount(parseInt(v))
                 }}
               />
+            </View>
+
+            <View style={SETTINGS_BLOCK}>
+              <Text
+                style={{ ...BLOCK_NAME, color: theme.colors.primary }}
+                tx="settingsScreen.special"
+              />
+
+              <View style={SWITCH_SETTING}>
+                <Text
+                  style={{ ...SETTING_NAME, color: theme.colors.primary }}
+                  tx="settingsScreen.devMode"
+                />
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  onValueChange={() => setIsDevMode(!isDevMode)}
+                  value={isDevMode}
+                />
+              </View>
             </View>
           </View>
         </Screen>

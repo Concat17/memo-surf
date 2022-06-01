@@ -15,4 +15,5 @@ export const palette = {
   darkGrey: "#3C5962",
   lightGreen: "#E1FCD9",
   pewterBlue: "#7D98A1",
+  lightPurple: "#879CD5",
 }

@@ -40,6 +40,8 @@
     "header": "Settings",
     "display": "Display",
     "learn": "Learn",
+    "special": "Special",
+    "devMode": "Developer mode",
     "switchTheme": "Switch theme",
     "cardPerLesson": "Cards per lesson"
   },

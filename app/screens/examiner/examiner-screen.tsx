@@ -9,7 +9,7 @@ import { useStores } from "../../models"
 import { getSnapshot } from "mobx-state-tree"
 import { CardComponent } from "./components/card"
 import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
-import { ThemeContext } from "../../app"
+import { DevContext, ThemeContext } from "../../app"
 import { AnswerLevel } from "../../types/AnswerLevel"
 
 const FULL: ViewStyle = { flex: 1 }
@@ -81,6 +81,7 @@ const CARD_COUNT_TEXT: TextStyle = {
 export const ExaminerScreen: FC<StackScreenProps<NavigatorParamList, "examiner">> = observer(
   ({ navigation }) => {
     const { theme } = React.useContext(ThemeContext)
+
     const { examiner } = useStores()
 
     const [isRevialed, setIsRevialed] = React.useState(false)

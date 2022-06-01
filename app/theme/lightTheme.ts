@@ -4,8 +4,8 @@ import { Theme } from "./theme"
 export const LightTheme: Theme = {
   name: "Light",
   colors: {
-    primary: palette.lightYellow,
-    secondary: palette.orange,
+    primary: palette.black,
+    secondary: palette.lightPurple,
     background: palette.lightBlue,
   },
 }
