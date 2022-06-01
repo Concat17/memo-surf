@@ -8017,6 +8017,11 @@ expo-pwa@0.0.119:
     commander "2.20.0"
     update-check "1.5.3"
 
+expo-sharing@~10.1.0:
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/expo-sharing/-/expo-sharing-10.1.1.tgz#80348768a2b0ab23860604c8902696d0c39ffea4"
+  integrity sha512-Wyre/y6Ce+S7PYwu1QGH2QNtO8ftHViiivSGAIif4shCO64QbO2JHYvgBzeMvAGfvUXzbJ04I+oCZKypA59tnA==
+
 expo-status-bar@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.2.0.tgz#16e73205da563f9536f562e439081e30e318a82e"
