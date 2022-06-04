@@ -77,7 +77,7 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
             }
             right={
               <View style={RIGHT_ICONS}>
-                {/* <ImportIcon onPress={importDeck} fill={theme.colors.primary} /> */}
+                <ImportIcon onPress={importDeck} fill={theme.colors.primary} />
                 <AddIcon fill={theme.colors.primary} onPress={goDeckParamsScreen} />
               </View>
             }

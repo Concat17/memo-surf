@@ -66,5 +66,11 @@ export const createDeckDefaultModel = () => types.optional(DeckModel, {})
 export type DeckRaw = {
   id: string
   name: string
-  cards: Array<{ question: string; answer: string; interval?: number }>
+  cards: Array<{
+    question: string
+    answer: string
+    interval?: number
+    eFactor?: number
+    repetitions?: number
+  }>
 }

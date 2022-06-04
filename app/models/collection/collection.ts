@@ -22,6 +22,8 @@ export const CollectionModel = types
         answer: c.answer,
         id: v4(),
         interval: c.interval,
+        eFactor: c.eFactor,
+        repetitions: c.repetitions,
       }))
       const filledDeck = { id: deck.id, name: deck.name, cards: filledCards }
 

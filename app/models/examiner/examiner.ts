@@ -82,7 +82,7 @@ export const ExaminerModel = types
           quality = 1
           break
         case AnswerLevel.GOOD:
-          quality = 2
+          quality = 3
           break
       }
 
