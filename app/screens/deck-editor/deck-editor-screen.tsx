@@ -3,7 +3,7 @@ import { View, ViewStyle, TextStyle, FlatList } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import { Screen, Text, GradientBackground, Header } from "../../components"
-import { color, spacing } from "../../theme"
+import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 import { QuestionEditorComponent } from "./components/question-editor"
 import { ThemeContext } from "../../app"
@@ -16,6 +16,11 @@ const FULL: ViewStyle = { flex: 1 }
 const BOLD: TextStyle = { fontWeight: "bold" }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
+}
+
+const TEXT: TextStyle = {
+  color: color.palette.white,
+  fontFamily: typography.secondary,
 }
 
 const HEADER: TextStyle = {
@@ -34,6 +39,20 @@ const HEADER_TITLE: TextStyle = {
 const LIST_STYLE: TextStyle = {
   ...BOLD,
   marginBottom: 50,
+}
+
+const LIST_HEADER: ViewStyle = {
+  padding: 10,
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+}
+
+const LIST_HEADER_TEXT: TextStyle = {
+  ...TEXT,
+  ...BOLD,
+  fontSize: 15,
+  letterSpacing: 2,
 }
 
 export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEditor">> = observer(
@@ -89,6 +108,15 @@ export const DeckEditorScreen: FC<StackScreenProps<NavigatorParamList, "deckEdit
                 keyExtractor={(deck) => String(deck.id)}
                 data={[...questions]}
                 style={LIST_STYLE}
+                stickyHeaderIndices={[0]}
+                ListHeaderComponent={
+                  <View style={{ ...LIST_HEADER, backgroundColor: theme.colors.background }}>
+                    <Text style={{ ...LIST_HEADER_TEXT, color: theme.colors.primary }}>
+                      Question
+                    </Text>
+                    <Text style={{ ...LIST_HEADER_TEXT, color: theme.colors.primary }}>Answer</Text>
+                  </View>
+                }
                 renderItem={({ item }) => (
                   <QuestionEditorComponent
                     question={item}

@@ -9,5 +9,5 @@ const addIcon = `<svg fill="none" xmlns="http://www.w3.org/2000/svg">
 </svg>`
 
 export const AddIcon = (props: AddIconProps) => (
-  <IconBasic height="30" width="30" viewBox="0 0 20 20" xml={addIcon} {...props} />
+  <IconBasic height="30" width="30" viewBox="2 3 18 20" xml={addIcon} {...props} />
 )

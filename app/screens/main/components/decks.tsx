@@ -113,8 +113,8 @@ export const Decks = withMenuContext<DeckProps & MenuContextProps>(
 
     const showExportOptions = (deck: Deck) =>
       Alert.alert(
-        "How do you want export deck?",
-        "I can save your progress or export clear deck.",
+        "How do you want to export the deck?",
+        " ",
         [
           {
             text: "Export with progress",

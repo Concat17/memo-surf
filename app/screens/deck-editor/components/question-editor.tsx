@@ -19,6 +19,9 @@ const EDITOR: ViewStyle = {
 
 const EDITOR_CLOSED: ViewStyle = {
   padding: 10,
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
 }
 
 const EDITOR_OPEN: ViewStyle = {
@@ -63,11 +66,10 @@ interface QuestionProps {
 
 export function QuestionEditorComponent({ question, onCardPress }: QuestionProps) {
   return (
-    <View style={EDITOR}>
+    <View style={EDITOR} onTouchEnd={onCardPress}>
       <View style={EDITOR_CLOSED}>
-        <Text style={EDIT_TEXT} onPress={onCardPress}>
-          {question.question}
-        </Text>
+        <Text style={EDIT_TEXT}>{question.question}</Text>
+        <Text style={EDIT_TEXT}>{question.answer}</Text>
       </View>
     </View>
   )

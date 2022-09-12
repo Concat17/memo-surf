@@ -6,5 +6,11 @@ type IconBaseProps = {
 } & XmlProps
 
 export function IconBasic({ xml, ...xmlProps }: IconBaseProps) {
-  return <SvgXml xml={xml} {...xmlProps} />
+  return (
+    <SvgXml
+      css={{ display: "flex", alignContent: "center", justifyContent: "center" }}
+      xml={xml}
+      {...xmlProps}
+    />
+  )
 }

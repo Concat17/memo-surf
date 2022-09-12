@@ -5,7 +5,8 @@
     "back": "Back",
     "save": "Save",
     "add": "Add",
-    "pickImage": "Pick image"
+    "pickImage": "Pick image",
+    "deleteImage": "Delete image"
   },
   "errors": {
     "invalidEmail": "Invalid email address."
@@ -32,9 +33,12 @@
     "showAnswer": "Show answer"
   },
   "editorScreen": {
-    "header": "Editor",
+    "header": "Cards",
     "questionPlaceholder": "Question",
     "answerPlaceholder": "Answer"
+  },
+  "cardEditorScreen": {
+    "header": "Card"
   },
   "settingsScreen": {
     "header": "Settings",

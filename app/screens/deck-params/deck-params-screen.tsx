@@ -109,7 +109,7 @@ export const DeckParamsScreen: FC<
           testID="next-screen-button"
           style={{ ...EDIT, backgroundColor: theme.colors.background }}
           textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
-          tx="common.save"
+          tx="common.add"
           onPress={() => {
             if (deck) {
               deck.changeDeckName(name)

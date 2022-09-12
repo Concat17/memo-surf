@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from "react"
+import React, { FC, useCallback } from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
@@ -42,6 +42,9 @@ const RIGHT_ICONS: ViewStyle = {
   alignItems: "center",
   justifyContent: "center",
 }
+const PLACEHOLDER_VIEW: ViewStyle = {
+  marginLeft: 60,
+}
 
 export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = observer(
   ({ navigation }) => {
@@ -70,10 +73,13 @@ export const MainScreen: FC<StackScreenProps<NavigatorParamList, "main">> = obse
         <View>
           <Header
             left={
-              <SettingsIcon
-                onPress={() => navigation.navigate("settings")}
-                fill={theme.colors.primary}
-              />
+              <View>
+                <View style={PLACEHOLDER_VIEW}></View>
+                <SettingsIcon
+                  onPress={() => navigation.navigate("settings")}
+                  fill={theme.colors.primary}
+                />
+              </View>
             }
             right={
               <View style={RIGHT_ICONS}>

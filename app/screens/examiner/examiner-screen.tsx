@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react"
+import React, { FC } from "react"
 import { View, ViewStyle, TextStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
@@ -6,10 +6,9 @@ import { Screen, Text, GradientBackground, Header, Button } from "../../componen
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 import { useStores } from "../../models"
-import { getSnapshot } from "mobx-state-tree"
 import { CardComponent } from "./components/card"
 import { ArrowBackIcon } from "../../components/icons/ArrowBackIcon"
-import { DevContext, ThemeContext } from "../../app"
+import { ThemeContext } from "../../app"
 import { AnswerLevel } from "../../types/AnswerLevel"
 
 const FULL: ViewStyle = { flex: 1 }
@@ -67,7 +66,7 @@ const ANSWERS: ViewStyle = {
 }
 
 const CARD_COUNT: ViewStyle = {
-  alignSelf: "center",
+  alignSelf: "flex-end",
 }
 
 const PLACEHOLDER: ViewStyle = {
@@ -106,7 +105,7 @@ export const ExaminerScreen: FC<StackScreenProps<NavigatorParamList, "examiner">
             <View style={CARD_COUNT}>
               <Text
                 style={{ ...CARD_COUNT_TEXT, color: theme.colors.primary }}
-              >{`Questions left: ${examiner.cards.length}`}</Text>
+              >{`Left: ${examiner.cards.length}`}</Text>
             </View>
           )}
           {!question ? (

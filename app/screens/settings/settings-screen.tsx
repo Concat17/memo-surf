@@ -72,7 +72,7 @@ export const SettingsScreen: FC<StackScreenProps<NavigatorParamList, "settings">
     const { examiner } = useStores()
 
     const { theme, setThemeOption } = React.useContext(ThemeContext)
-    const { isDevMode, setIsDevMode } = React.useContext(DevContext)
+    // const { isDevMode, setIsDevMode } = React.useContext(DevContext)
 
     const [isEnabled, setIsEnabled] = useState(theme.name === "Light")
 
@@ -132,7 +132,7 @@ export const SettingsScreen: FC<StackScreenProps<NavigatorParamList, "settings">
               />
             </View>
 
-            <View style={SETTINGS_BLOCK}>
+            {/* <View style={SETTINGS_BLOCK}>
               <Text
                 style={{ ...BLOCK_NAME, color: theme.colors.primary }}
                 tx="settingsScreen.special"
@@ -149,7 +149,7 @@ export const SettingsScreen: FC<StackScreenProps<NavigatorParamList, "settings">
                   value={isDevMode}
                 />
               </View>
-            </View>
+            </View> */}
           </View>
         </Screen>
       </View>

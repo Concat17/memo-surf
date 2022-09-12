@@ -15,10 +15,7 @@ export const CardModel = types
     edit(question: string, answer: string, imagePath?: string) {
       self.question = question
       self.answer = answer
-
-      if (imagePath) {
-        self.imagePath = imagePath
-      }
+      self.imagePath = imagePath ?? ""
     },
   }))
 

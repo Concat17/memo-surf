@@ -144,7 +144,7 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
           right={
             card ? <TrashIcon onPress={showAlert} fill={theme.colors.primary} /> : <View></View>
           }
-          headerTx="editorScreen.header"
+          headerTx="cardEditorScreen.header"
           style={{ ...HEADER, backgroundColor: theme.colors.secondary }}
           titleStyle={{ ...HEADER_TITLE, color: theme.colors.primary }}
         />
@@ -155,6 +155,7 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
             defaultValue={question}
             onChangeText={setQuestion}
             placeholder="Question"
+            placeholderTextColor="grey"
           />
           <Text style={HINT_TEXT}>Enter answer</Text>
           <TextInput
@@ -162,6 +163,7 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
             defaultValue={answer}
             onChangeText={setAnswer}
             placeholder="Answer"
+            placeholderTextColor="grey"
           />
           {imagePath ? <Image source={{ uri: imagePath }} style={PICTURE_STYLE} /> : <View />}
           <Button
@@ -170,6 +172,16 @@ export const CardEditorScreen: FC<StackScreenProps<NavigatorParamList, "cardEdit
             tx="common.pickImage"
             onPress={pickImage}
           />
+          {imagePath ? (
+            <Button
+              style={{ ...EDIT, backgroundColor: theme.colors.background }}
+              textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
+              tx="common.deleteImage"
+              onPress={() => setimagePath("")}
+            />
+          ) : (
+            <View />
+          )}
           <Button
             style={{ ...EDIT, backgroundColor: theme.colors.background }}
             textStyle={{ ...EDIT_TEXT, color: theme.colors.primary }}
